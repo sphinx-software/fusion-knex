@@ -1,7 +1,7 @@
 {
   "name": "@sphinx-software/fusion-knex",
   "version": "0.1.0",
-  "description": "The Knex package for fusion. Using as default database package",
+  "description": "The Knex-binding package for fusion. Using as default database package",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
