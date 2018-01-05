@@ -7,6 +7,8 @@ const MigrationRollbackCommand  = require('./migration/migration-rollback.comman
 const SeederMakeCommand         = require('./seeder/seeder-make.command');
 const SeederRunCommand          = require('./seeder/seeder-run.command');
 
+const DatabaseStorageAdapter    = require('./storage/database-storage-adapter');
+
 exports.register = (container) => {
     container.singleton('database', async () => {
         let config = await container.make('config');
@@ -37,6 +39,20 @@ exports.register = (container) => {
 };
 
 exports.boot = async (container) => {
+    let storageFactory = await container.make('storage.factory');
+
+    storageFactory.register('database', async (adapterConfiguration) => {
+        const DatabaseTaggingStrategy    = require('./storage/database-tagging-strategy');
+        const DatabaseExpirationStrategy = require('./storage/database-expiration-strategy');
+
+        return new DatabaseStorageAdapter(
+            await container.make('database'),
+            await container.make('serializer'),
+            new DatabaseTaggingStrategy(),
+            new DatabaseExpirationStrategy()
+        ).setDefaultTTL(adapterConfiguration.ttl).setStorageTable(adapterConfiguration.table);
+    });
+
     let consoleKernel = await container.make('console.kernel');
 
     await consoleKernel.register('command.migration-make');
