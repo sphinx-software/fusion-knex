@@ -1,0 +1,17 @@
+{
+  "name": "@sphinx-software/fusion-knex",
+  "version": "0.1.0",
+  "description": "The Knex package for fusion. Using as default database package",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "rikky <son.levuthai@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "knex": "^0.14.2"
+  },
+  "optionalDependencies": {
+    "sqlite3": "^3.1.13"
+  }
+}
