@@ -17,7 +17,7 @@ exports.register = (container) => {
 
         database.container = container;
 
-        return knex(config.database);
+        return database;
     });
 
     container.singleton('command.migration-make', async () => {
