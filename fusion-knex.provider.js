@@ -9,6 +9,8 @@ const SeederRunCommand          = require('./seeder/seeder-run.command');
 
 const DatabaseStorageAdapter    = require('./storage/database-storage-adapter');
 
+const DatabasePaginator         = require('./paginator/database-paginator');
+
 exports.register = (container) => {
     container.singleton('database', async () => {
         let config = await container.make('config');
@@ -35,6 +37,12 @@ exports.register = (container) => {
     container.singleton('command.seeder-run', async () => {
         return new SeederRunCommand(await container.make('database'), await container.make('config'));
     });
+
+    container.singleton('paginator.database', async () => {
+        let config = await container.make('config');
+
+        return new DatabasePaginator().setItemPerPage(config.paginator.itemPerPage);
+    })
 
 };
 
